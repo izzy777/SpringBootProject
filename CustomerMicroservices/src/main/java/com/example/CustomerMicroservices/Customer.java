@@ -2,23 +2,23 @@ package com.example.CustomerMicroservices;
 
 public class Customer {
 
-    private Long id;
+    private int id;
     private String name;
     private String password;
     private String email;
 
-    public Customer(Long id, String name, String password, String email){
+    public Customer(int i, String name, String password, String email){
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
     }
 
-    public void setId(Long id){
+    public void setId(int id){
         this.id = id;
     }
 
-    public Long getId(){
+    public int getId(){
         return this.id;
     }
 
