@@ -16,6 +16,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
+import jakarta.persistence.PersistenceContext;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -42,17 +44,22 @@ public class CustomerAPI {
         customerList.add(customer4);
         Customer customer5 = new Customer(5, "Jerred", "tomato123", "jerred@gmail.com");
         customerList.add(customer5);
-
-        customerRepository.saveAll(customerList);
+        //customerRepository.saveAll(customerList);
     }
 
     @GetMapping
     public List<Customer> getAllCustomers() {
-        return customerList;
+        if (customerList.size() > 0) {
+            customerRepository.saveAll(customerList);
+            customerList.clear();
+        }
+        List<Customer> customers = customerRepository.findAll();
+        return customers;
     }
 
     @GetMapping("/customers/{id}")
     public Customer getCustomerById(@PathVariable("id") int id){
+        List<Customer> customerList = customerRepository.findAll();
         for(Customer c : customerList){
             if(c.getId() == id){
                 return c;
@@ -84,7 +91,7 @@ public class CustomerAPI {
 			return ResponseEntity.badRequest().build();
 		}
 		newCustomer = customerRepository.save(newCustomer);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(newCustomer);
 	}	
 	
 	@DeleteMapping("/customers/{id}")
