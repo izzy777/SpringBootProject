@@ -1,6 +1,5 @@
 package com.example.CustomerMicroservices;
 
-import org.springframework.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +46,7 @@ public class CustomerAPI {
         //customerRepository.saveAll(customerList);
     }
 
-    @GetMapping
+    @GetMapping("/customers")
     public List<Customer> getAllCustomers() {
         if (customerList.size() > 0) {
             customerRepository.saveAll(customerList);
